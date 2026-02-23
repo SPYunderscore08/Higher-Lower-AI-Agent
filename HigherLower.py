@@ -1,14 +1,12 @@
 import random
 
 class HigherLower:
-    number_to_guess: int # rename
-    tries: int
     def __init__(self):
         self.start_new_game()
         self.tries = 0
 
     def start_new_game(self):
-        self.number_to_guess = random.randint(0, 100)
+        self.number_to_guess = random.randint(1, 100)
 
     def try_guess(self, guess: int):
         self.tries += 1
