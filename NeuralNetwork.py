@@ -14,15 +14,12 @@ class NeuralNetwork:
     def assign_weight_matrices(self):
         for i in range(1, len(self.layers)):
             weight_matrix = self.generate_weight_matrix(self.layers[i].size, self.layers[i - 1].size)
+
             self.layers[i - 1].next_layer = self.layers[i]
             self.layers[i].prev_layer = self.layers[i - 1]
 
             self.layers[i - 1].next_weight_matrix = weight_matrix
             self.layers[i].prev_weight_matrix = weight_matrix
-
-    @staticmethod
-    def generate_weight_matrix(rows: int, columns: int):
-        return list([random.random() for _ in range(columns)] for _ in range(rows))
 
     def calculate_result(self, input_list: list):
         for i in range(len(input_list)):
@@ -35,3 +32,7 @@ class NeuralNetwork:
             layer.do_forward_propagation_step()
 
         self.output_layer.do_forward_propagation_step()
+
+    @staticmethod
+    def generate_weight_matrix(rows: int, columns: int):
+        return list([random.random() for _ in range(columns)] for _ in range(rows))
