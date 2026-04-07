@@ -3,6 +3,7 @@ import random
 class HigherLower:
     def __init__(self):
         self.start_new_game()
+        self.number_to_guess = random.randint(1, 100)
         self.tries = 0
 
     def start_new_game(self):

@@ -1,12 +1,10 @@
-from HigherLower import *
+from Agent import *
+
 
 def main():
-    game = HigherLower()
-    guess = int(input())#random.randint(1, 100)
-    while game.try_guess(guess) != 0:
-        guess = int(input())  # random.randint(1, 100)
-        print(guess)
-
+    network: NeuralNetwork = NeuralNetwork(3, 2, 5, 100)
+    ai: Agent = Agent(network)
+    ai.play()
 
 if __name__ == "__main__":
     main()
