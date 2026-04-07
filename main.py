@@ -2,7 +2,7 @@ from Agent import *
 
 
 def main():
-    network: NeuralNetwork = NeuralNetwork(3, 2, 5, 100)
+    network: NeuralNetwork = NeuralNetwork(3, 2, 5, 1)
     ai: Agent = Agent(network)
     ai.play()
 

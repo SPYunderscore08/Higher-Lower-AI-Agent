@@ -20,7 +20,7 @@ class NetworkLayer:
     def sum_of_weight_products(self, neuron_index: int):
         sum_of_weighted_products = 0
         for i in range(self.prev_layer.size):
-            sum_of_weighted_products += self.prev_layer.neurons[i] * self.prev_weight_matrix[neuron_index][i]
+            sum_of_weighted_products += self.prev_layer.neurons[i].activation * self.prev_weight_matrix[neuron_index][i]
 
         return sum_of_weighted_products
 

@@ -26,12 +26,18 @@ class NeuralNetwork:
             self.input_layer.neurons[0].activation = input_list[i]
 
         self.do_forward_propagation()
+        return self.output_layer.neurons[0].activation
+
 
     def do_forward_propagation(self):
         for layer in self.hidden_layers:
             layer.do_forward_propagation_step()
 
         self.output_layer.do_forward_propagation_step()
+
+    def do_backward_propagation(self, desired):
+        pass
+
 
     @staticmethod
     def generate_weight_matrix(rows: int, columns: int):
