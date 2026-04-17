@@ -13,7 +13,7 @@ class HigherLower:
         self.tries += 1
         if guess < self.number_to_guess:
             print("Higher")
-            return -1
+            return 2
 
         elif guess > self.number_to_guess:
             print("Lower")

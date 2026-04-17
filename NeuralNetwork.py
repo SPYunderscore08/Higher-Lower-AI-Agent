@@ -1,11 +1,6 @@
 import random
 
 from NetworkLayer import *
-from enum import Enum
-
-class TrainingType(Enum):
-    BACKPROPAGATION = 0,
-    TMP = 1 # Some Reinforcement Learning Algorithm
 
 """
 I want NeuralNetwork to be a super class of which its child class can use basic methods, like predict() <- more or less static method
@@ -14,15 +9,13 @@ I want to do this, because then I'll have no conflicts and matches inside the cl
 """
 
 class NeuralNetwork:
-    def __init__(self, number_of_inputs: int, number_of_hidden_layers: int , hidden_layer_size: int, number_of_outputs: int, training_type: TrainingType):
+    def __init__(self, number_of_inputs: int, number_of_hidden_layers: int , hidden_layer_size: int, number_of_outputs: int):
         self.input_layer = NetworkLayer(number_of_inputs)
         self.hidden_layers = [NetworkLayer(hidden_layer_size) for _ in range(number_of_hidden_layers)]
         self.output_layer = NetworkLayer(number_of_outputs)
 
         self.layers = [self.input_layer] + self.hidden_layers + [self.output_layer]
         self.assign_weight_matrices()
-
-        self.training_type = training_type
 
     def assign_weight_matrices(self):
         for i in range(1, len(self.layers)):
@@ -34,11 +27,14 @@ class NeuralNetwork:
             self.layers[i - 1].next_weight_matrix = weight_matrix
             self.layers[i].prev_weight_matrix = weight_matrix
 
-    def predict(self, input_list: list): # Deterministic
+    def evaluate_inputs(self, input_list: list):
         for i in range(len(input_list)):
             self.input_layer.neurons[0].activation = input_list[i]
 
         self.do_forward_propagation()
+
+    def predict(self, input_list: list): # Deterministic
+        self.evaluate_inputs(input_list)
         return self.output_layer.neurons[0].activation
 
     def do_forward_propagation(self):
@@ -47,13 +43,17 @@ class NeuralNetwork:
 
         self.output_layer.do_forward_propagation_step()
 
-    def do_backward_propagation(self, desired_output: list, learning_rate: float):
-        for layer in self.layers:
-           layer.do_backward_propagation_step(0, learning_rate)
-
-    def get_cost_function(self, desired_outputs: list):
-        return [(desired_outputs[i] - self.output_layer.neurons[i]) ** 2 for i in range(self.output_layer.size)]
+    def train(self):
+        pass
 
     @staticmethod
     def generate_weight_matrix(rows: int, columns: int):
         return list([random.random() for _ in range(columns)] for _ in range(rows))
+
+
+class BackpropagationNetwork(NeuralNetwork): # todo
+    def __init__(self, number_of_inputs: int, number_of_hidden_layers: int, hidden_layer_size: int, number_of_outputs: int):
+        super().__init__(number_of_inputs, number_of_hidden_layers, hidden_layer_size, number_of_outputs)
+
+    def train(self, desired_output: float): # todo might change int to list for scalability
+        pass
