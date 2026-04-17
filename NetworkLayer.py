@@ -17,6 +17,11 @@ class NetworkLayer:
         for i in range(len(self.neurons)):
             self.neurons[i].activation = self.sigmoid(self.sum_of_weight_products(i) + self.neurons[i].bias)
 
+    def do_backward_propagation_step(self, error_term: float, learning_rate: float):
+        for i in range(len(self.neurons)):
+
+
+
     def sum_of_weight_products(self, neuron_index: int):
         sum_of_weighted_products = 0
         for i in range(self.prev_layer.size):

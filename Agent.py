@@ -11,18 +11,19 @@ class Agent:
 
     def play(self):  # playing the game, basically training, but i guess without mutation; i.e. performance check
         self.game = HigherLower()
-        guess = int(self.network.calculate_result([0.0, 0.0, self.game.tries]) * 100)
+
+        guess = int(self.network.predict([0.0, 0.0, self.game.tries], self.game.number_to_guess / 100) * 100)
         print("Guess: " + str(guess))
         output = self.game.try_guess(guess)
         print("Output: " + str(output))
 
         while output != 0:
-            guess = int(self.network.calculate_result(
+            guess = int(self.network.predict(
                 [
                     1 if output == 1 else 0,
                     1 if output == -1 else 0,
                     self.game.tries
-                ]
+                ], self.game.number_to_guess / 100
             ) * 100)
             print("Guess: " + str(guess))
             output = self.game.try_guess(guess)
